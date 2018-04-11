@@ -1,0 +1,2 @@
+## *HashValidator for Fitcrack* ##
+
