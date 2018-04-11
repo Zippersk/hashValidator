@@ -95,7 +95,7 @@ LIBRARY_DEV_FOLDER      ?= $(LIBRARY_DEV_ROOT_FOLDER)/hashcat
 ## Filenames for library and frontend
 ##
 
-HASHCAT_FRONTEND        := hashcat
+HASHCAT_FRONTEND        := hashValidator
 HASHCAT_LIBRARY         := libhashcat.so.$(VERSION_PURE)
 
 ifeq ($(UNAME),CYGWIN)
