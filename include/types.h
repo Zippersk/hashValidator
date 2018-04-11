@@ -21,7 +21,6 @@
 #define WINICONV_CONST
 #endif
 
-#include <iconv.h>
 
 #if defined (_WIN)
 #include <windows.h>
@@ -901,12 +900,10 @@ typedef struct plain
 
 } plain_t;
 
-#include "ext_OpenCL.h"
-
 typedef struct hc_device_param
 {
-  cl_device_id    device;
-  cl_device_type  device_type;
+  bool    device;
+  bool device_type;
 
   u32     device_id;
   u32     platform_devices_id;   // for mapping with hms devices
@@ -1089,78 +1086,7 @@ typedef struct hc_device_param
 
   double  nvidia_spin_damp;
 
-  cl_platform_id platform;
-
-  cl_uint  device_vendor_id;
-  cl_uint  platform_vendor_id;
-
-  cl_kernel  kernel1;
-  cl_kernel  kernel12;
-  cl_kernel  kernel2;
-  cl_kernel  kernel23;
-  cl_kernel  kernel3;
-  cl_kernel  kernel4;
-  cl_kernel  kernel_init2;
-  cl_kernel  kernel_loop2;
-  cl_kernel  kernel_mp;
-  cl_kernel  kernel_mp_l;
-  cl_kernel  kernel_mp_r;
-  cl_kernel  kernel_amp;
-  cl_kernel  kernel_tm;
-  cl_kernel  kernel_memset;
-  cl_kernel  kernel_atinit;
-  cl_kernel  kernel_decompress;
-  cl_kernel  kernel_aux1;
-  cl_kernel  kernel_aux2;
-  cl_kernel  kernel_aux3;
-  cl_kernel  kernel_aux4;
-
-  cl_context context;
-
-  cl_program program;
-  cl_program program_mp;
-  cl_program program_amp;
-
-  cl_command_queue command_queue;
-
-  cl_mem  d_pws_buf;
-  cl_mem  d_pws_amp_buf;
-  cl_mem  d_pws_comp_buf;
-  cl_mem  d_pws_idx;
-  cl_mem  d_words_buf_l;
-  cl_mem  d_words_buf_r;
-  cl_mem  d_rules;
-  cl_mem  d_rules_c;
-  cl_mem  d_combs;
-  cl_mem  d_combs_c;
-  cl_mem  d_bfs;
-  cl_mem  d_bfs_c;
-  cl_mem  d_tm_c;
-  cl_mem  d_bitmap_s1_a;
-  cl_mem  d_bitmap_s1_b;
-  cl_mem  d_bitmap_s1_c;
-  cl_mem  d_bitmap_s1_d;
-  cl_mem  d_bitmap_s2_a;
-  cl_mem  d_bitmap_s2_b;
-  cl_mem  d_bitmap_s2_c;
-  cl_mem  d_bitmap_s2_d;
-  cl_mem  d_plain_bufs;
-  cl_mem  d_digests_buf;
-  cl_mem  d_digests_shown;
-  cl_mem  d_salt_bufs;
-  cl_mem  d_esalt_bufs;
-  cl_mem  d_tmps;
-  cl_mem  d_hooks;
-  cl_mem  d_result;
-  cl_mem  d_scryptV0_buf;
-  cl_mem  d_scryptV1_buf;
-  cl_mem  d_scryptV2_buf;
-  cl_mem  d_scryptV3_buf;
-  cl_mem  d_root_css_buf;
-  cl_mem  d_markov_css_buf;
-  cl_mem  d_st_digests_buf;
-  cl_mem  d_st_salts_buf;
-  cl_mem  d_st_esalts_buf;
+ 
 
   void   *kernel_params[PARAMCNT];
   void   *kernel_params_mp[PARAMCNT];
@@ -1204,15 +1130,14 @@ typedef struct opencl_ctx
 
   void               *ocl;
 
-  cl_uint             platforms_cnt;
-  cl_platform_id     *platforms;
+
+
   char              **platforms_vendor;
   char              **platforms_name;
   char              **platforms_version;
   bool               *platforms_skipped;
 
-  cl_uint             platform_devices_cnt;
-  cl_device_id       *platform_devices;
+  
 
   u32                 devices_cnt;
   u32                 devices_active;
@@ -1226,7 +1151,7 @@ typedef struct opencl_ctx
 
   u32                 opencl_platforms_filter;
   u32                 devices_filter;
-  cl_device_type      device_types_filter;
+
 
   double              target_msec;
 
@@ -1542,7 +1467,6 @@ typedef struct wl_data
   u64  pos;
 
   bool    iconv_enabled;
-  iconv_t iconv_ctx;
   char   *iconv_tmp;
 
   void (*func) (char *, u64, u64 *, u64 *);

@@ -1668,44 +1668,10 @@ char *status_get_hwmon_dev (const hashcat_ctx_t *hashcat_ctx, const int device_i
 
   hc_thread_mutex_lock (status_ctx->mux_hwmon);
 
-  const int num_temperature = hm_get_temperature_with_device_id ((hashcat_ctx_t *) hashcat_ctx, device_id);
-  const int num_fanspeed    = hm_get_fanspeed_with_device_id    ((hashcat_ctx_t *) hashcat_ctx, device_id);
-  const int num_utilization = hm_get_utilization_with_device_id ((hashcat_ctx_t *) hashcat_ctx, device_id);
-  const int num_corespeed   = hm_get_corespeed_with_device_id   ((hashcat_ctx_t *) hashcat_ctx, device_id);
-  const int num_memoryspeed = hm_get_memoryspeed_with_device_id ((hashcat_ctx_t *) hashcat_ctx, device_id);
-  const int num_buslanes    = hm_get_buslanes_with_device_id    ((hashcat_ctx_t *) hashcat_ctx, device_id);
+
 
   int output_len = 0;
 
-  if (num_temperature >= 0)
-  {
-    output_len += snprintf (output_buf + output_len, HCBUFSIZ_TINY - output_len, "Temp:%3dc ", num_temperature);
-  }
-
-  if (num_fanspeed >= 0)
-  {
-    output_len += snprintf (output_buf + output_len, HCBUFSIZ_TINY - output_len, "Fan:%3d%% ", num_fanspeed);
-  }
-
-  if (num_utilization >= 0)
-  {
-    output_len += snprintf (output_buf + output_len, HCBUFSIZ_TINY - output_len, "Util:%3d%% ", num_utilization);
-  }
-
-  if (num_corespeed >= 0)
-  {
-    output_len += snprintf (output_buf + output_len, HCBUFSIZ_TINY - output_len, "Core:%4dMHz ", num_corespeed);
-  }
-
-  if (num_memoryspeed >= 0)
-  {
-    output_len += snprintf (output_buf + output_len, HCBUFSIZ_TINY - output_len, "Mem:%4dMHz ", num_memoryspeed);
-  }
-
-  if (num_buslanes >= 0)
-  {
-    output_len += snprintf (output_buf + output_len, HCBUFSIZ_TINY - output_len, "Bus:%d ", num_buslanes);
-  }
 
   if (output_len > 0)
   {
@@ -1725,40 +1691,16 @@ char *status_get_hwmon_dev (const hashcat_ctx_t *hashcat_ctx, const int device_i
 
 int status_get_corespeed_dev (const hashcat_ctx_t *hashcat_ctx, const int device_id)
 {
-  const opencl_ctx_t *opencl_ctx = hashcat_ctx->opencl_ctx;
 
-  hc_device_param_t *device_param = &opencl_ctx->devices_param[device_id];
 
-  if (device_param->skipped == true) return -1;
-
-  status_ctx_t *status_ctx = hashcat_ctx->status_ctx;
-
-  hc_thread_mutex_lock (status_ctx->mux_hwmon);
-
-  const int num_corespeed = hm_get_corespeed_with_device_id ((hashcat_ctx_t *) hashcat_ctx, device_id);
-
-  hc_thread_mutex_unlock (status_ctx->mux_hwmon);
-
-  return num_corespeed;
+  return 0;
 }
 
 int status_get_memoryspeed_dev (const hashcat_ctx_t *hashcat_ctx, const int device_id)
 {
-  const opencl_ctx_t *opencl_ctx = hashcat_ctx->opencl_ctx;
 
-  hc_device_param_t *device_param = &opencl_ctx->devices_param[device_id];
 
-  if (device_param->skipped == true) return -1;
-
-  status_ctx_t *status_ctx = hashcat_ctx->status_ctx;
-
-  hc_thread_mutex_lock (status_ctx->mux_hwmon);
-
-  const int num_memoryspeed = hm_get_memoryspeed_with_device_id ((hashcat_ctx_t *) hashcat_ctx, device_id);
-
-  hc_thread_mutex_unlock (status_ctx->mux_hwmon);
-
-  return num_memoryspeed;
+  return 0;
 }
 
 u64 status_get_progress_dev (const hashcat_ctx_t *hashcat_ctx, const int device_id)

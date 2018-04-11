@@ -122,22 +122,7 @@ static int monitor (hashcat_ctx_t *hashcat_ctx)
 
         if (device_param->skipped == true) continue;
 
-        const int rc_throttle = hm_get_throttle_with_device_id (hashcat_ctx, device_id);
 
-        if (rc_throttle == -1) continue;
-
-        if (rc_throttle > 0)
-        {
-          slowdown_warnings++;
-
-          if (slowdown_warnings == 1) EVENT_DATA (EVENT_MONITOR_THROTTLE1, &device_id, sizeof (u32));
-          if (slowdown_warnings == 2) EVENT_DATA (EVENT_MONITOR_THROTTLE2, &device_id, sizeof (u32));
-          if (slowdown_warnings == 3) EVENT_DATA (EVENT_MONITOR_THROTTLE3, &device_id, sizeof (u32));
-        }
-        else
-        {
-          slowdown_warnings = 0;
-        }
       }
 
       hc_thread_mutex_unlock (status_ctx->mux_hwmon);
@@ -153,16 +138,8 @@ static int monitor (hashcat_ctx_t *hashcat_ctx)
 
         if (device_param->skipped == true) continue;
 
-        if ((opencl_ctx->devices_param[device_id].device_type & CL_DEVICE_TYPE_GPU) == 0) continue;
 
-        const int temperature = hm_get_temperature_with_device_id (hashcat_ctx, device_id);
 
-        if (temperature > (int) user_options->gpu_temp_abort)
-        {
-          EVENT_DATA (EVENT_MONITOR_TEMP_ABORT, &device_id, sizeof (u32));
-
-          myabort (hashcat_ctx);
-        }
       }
 
       hc_thread_mutex_unlock (status_ctx->mux_hwmon);
@@ -250,11 +227,7 @@ static int monitor (hashcat_ctx_t *hashcat_ctx)
 
         exec_total += exec;
 
-        const int util = hm_get_utilization_with_device_id (hashcat_ctx, device_id);
 
-        if (util == -1) continue;
-
-        util_total += (double) util;
 
         util_cnt++;
       }

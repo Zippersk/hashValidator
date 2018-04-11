@@ -295,7 +295,7 @@ LFLAGS_CROSS_WIN64      += -lpsapi
 ## Objects
 ##
 
-OBJS_ALL                := hashValidator   bitops  common convert  cpu_aes cpu_crc32 cpu_des cpu_md4 cpu_md5 cpu_sha1 cpu_sha256    dynloader event ext_ADL ext_nvapi ext_nvml  ext_sysfs  ext_lzma filehandling folder hashcat hashes hlfmt hwmon  interface    memory monitor         shared status   terminal thread timer  usage user_options 
+OBJS_ALL                := hashValidator   bitops  common convert  cpu_aes cpu_crc32 cpu_des cpu_md4 cpu_md5 cpu_sha1 cpu_sha256    dynloader event ext_ADL ext_nvapi ext_nvml  ext_sysfs  ext_lzma filehandling folder hashcat hashes hlfmt  interface    memory monitor         shared status   terminal thread timer  usage user_options 
 
 ifeq ($(SYSTEM_LZMA_SDK),0)
 OBJS_ALL += lzma_sdk/Alloc lzma_sdk/Lzma2Dec lzma_sdk/LzmaDec
