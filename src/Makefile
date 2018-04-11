@@ -237,7 +237,6 @@ endif
 
 LFLAGS_NATIVE           := $(LFLAGS)
 LFLAGS_NATIVE           += -lpthread
-LFLAGS_NATIVE           += -liconv
 endif # Darwin
 
 ifeq ($(UNAME),CYGWIN)
@@ -246,7 +245,6 @@ CFLAGS_NATIVE           += -DWITH_HWMON
 LFLAGS_NATIVE           := $(LFLAGS)
 LFLAGS_NATIVE           += -Wl,--dynamicbase -Wl,--nxcompat
 LFLAGS_NATIVE           += -lpsapi
-LFLAGS_NATIVE           += -liconv
 endif # CYGWIN
 
 ifeq ($(UNAME),MSYS2)
@@ -255,7 +253,6 @@ CFLAGS_NATIVE           += -DWITH_HWMON
 LFLAGS_NATIVE           := $(LFLAGS)
 LFLAGS_NATIVE           += -Wl,--dynamicbase -Wl,--nxcompat
 LFLAGS_NATIVE           += -lpsapi
-LFLAGS_NATIVE           += -liconv
 endif # MSYS2
 
 ##
